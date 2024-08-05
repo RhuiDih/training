@@ -155,14 +155,6 @@ def setup_model(args, tokenizer, train_loader, grad_accum):
         )
         model.config.eos_token_id = tokenizer.eos_token_id
 
-    assert model.__class__.__name__ in [
-        "MistralForCausalLM",
-        "GPTDolomiteForCausalLM",
-        "LlamaForCausalLM",
-        "Starcoder2ForCausalLM",
-        "GemmaForCausalLM",
-    ], f"Model class name: {model.__class__.__name__} is not supported."
-
     model = convert_loss_to_reduce_sum(model, is_granite=args.is_granite)
     model = add_noisy_embeddings(model, noise_alpha=args.NEFTune_alpha)
 
